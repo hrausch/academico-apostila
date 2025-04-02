@@ -1,0 +1,17 @@
+\chapter{Templates e Heran\c{c}a}
+\section{Templates}
+\begin{itemize}
+  \item Criar estrutura: \texttt{templates/app\_name/}
+  \item Configurar \texttt{TEMPLATES} no \texttt{settings.py}.
+  \item Criar \texttt{base.html} com layout padr\~ao.
+  \item Usar \texttt{{\% extends \textquotedbl{}base.html\textquotedbl{} \%}} e \texttt{{\% block content \%}} nos templates.
+\end{itemize}
+
+\section{Exemplo de Views e Rotas}
+\begin{lstlisting}[language=Python]
+def admin_dashboard(request):
+   return render(request, 'planner/admin_dashboard.html')
+
+def disciplinas(request):
+   return render(request, 'planner/disciplinas.html')
+\end{lstlisting}

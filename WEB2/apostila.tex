@@ -1,0 +1,56 @@
+\documentclass[12pt]{book}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegray},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize\color{black},
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{Desenvolvimento Web com Django}
+\author{Herbert Rausch}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\include{WEB2/aula01_django_introduction}
+% \include{WEB2/aula02_django_app}
+\include{WEB2/aula03_views_rotas}
+\include{WEB2/aula04_templates_heranca}
+
+\bibliography{WEB2/referencias}
+
+\include{WEB2/apendice_comandos}
+
+
+\end{document}

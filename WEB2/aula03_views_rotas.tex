@@ -1,0 +1,17 @@
+\chapter{Views Est\'aticas e Rotas}
+\section{Criando Views}
+Exemplo de view:
+\begin{lstlisting}[language=Python]
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'index.html')
+\end{lstlisting}
+
+\section{Formul\'arios e POST}
+\begin{itemize}
+  \item Definir action e method no HTML.
+  \item Criar view que processa request.POST.
+  \item Inserir token CSRF com \texttt{{\% csrf\_token \%}}.
+\end{itemize}
+

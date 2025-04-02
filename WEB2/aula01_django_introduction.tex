@@ -1,0 +1,54 @@
+
+
+\chapter{Instala\c{c}\~ao e Ambiente}
+\section{Arquitetura Cliente Servidor}
+A arquitetura cliente-servidor \'{e} um modelo que separa as responsabilidades do cliente (interface do usu\'ario) e do servidor (processamento de dados).
+
+\section{Django Framework}
+Django \'{e} um framework Python de alto n\'{i}vel que segue o padr\~ao MTV (Model-Template-View). Oferece alta produtividade, seguran\c{c}a e escalabilidade.
+
+\section{Instala\c{c}\~ao e Configura\c{c}\~ao}
+\begin{itemize}
+  \item Instala\c{c}\~ao via pip: \texttt{pip install django}
+  \item Criar \texttt{requirements.txt}: \texttt{pip freeze > requirements.txt}
+  \item Instalar depend\^encias: \texttt{pip install -r requirements.txt}
+  \item Ambiente virtual: \texttt{virtualenv meu\_ambiente}
+  \item Ativar virtualenv:
+    \begin{itemize}
+      \item Windows: \texttt{meu\_ambiente\textbackslash Scripts\textbackslash activate}
+      \item Linux/Mac: \texttt{source meu\_ambiente/bin/activate}
+    \end{itemize}
+\end{itemize}
+
+\section{Docker (Opcional)}
+\begin{itemize}
+  \item Crie um Dockerfile e um arquivo \texttt{docker-compose.yml} para gerenciar a aplica\c{c}\~ao Django em containers.
+\end{itemize}
+
+\section{Criando Projeto}
+\texttt{django-admin startproject nome\_do\_projeto}
+
+\section{Arquivos do Projeto}
+\begin{itemize}
+  \item \texttt{manage.py}, \texttt{settings.py}, \texttt{urls.py}, \texttt{wsgi.py}, entre outros.
+\end{itemize}
+
+
+\section{Criando M\'odulos (Apps)}
+
+No Django, um m\'odulo (ou app) \'{e} uma parte independente da aplica\c{c}\~ao que possui uma fun\c{c}\~ao espec\'ifica. Por exemplo, um app pode ser um sistema de login, um blog, ou uma agenda. Cada m\'odulo possui seu pr\'oprio conjunto de arquivos para models, views, rotas, templates, entre outros, facilitando a organiza\c{c}\~ao e reutiliza\c{c}\~ao do c\'odigo.
+
+\section{Comando}
+\texttt{python manage.py startapp nome\_do\_app}
+
+\section{Configura\c{c}\~oes do App}
+\begin{itemize}
+  \item Adicionar app em \texttt{INSTALLED\_APPS} no \texttt{settings.py}.
+  \item Criar \texttt{urls.py} no app.
+  \item Criar views no \texttt{views.py} e rotas associadas.
+\end{itemize}
+
+
+
+
+
