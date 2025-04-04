@@ -1,45 +1,188 @@
+\chapter{Arquitetura Cliente-Servidor e Django}
 
-
-\chapter{Instala\c{c}\~ao e Ambiente}
 \section{Arquitetura Cliente Servidor}
-A arquitetura cliente-servidor \'{e} um modelo que separa as responsabilidades do cliente (interface do usu\'ario) e do servidor (processamento de dados).
+A arquitetura cliente-servidor \'{e} um modelo de design amplamente utilizado no desenvolvimento web. Ela separa o cliente (respons\'avel pela interface de intera\c{c}\~ao com o usu\'ario) do servidor (respons\'avel pelo processamento e armazenamento dos dados).
 
-\section{Django Framework}
-Django \'{e} um framework Python de alto n\'{i}vel que segue o padr\~ao MTV (Model-Template-View). Oferece alta produtividade, seguran\c{c}a e escalabilidade.
+\begin{enumerate}
+    \item Cliente: Normalmente um navegador web ou um aplicativo que envia solicita\c{c}\~oes HTTP e exibe as respostas do servidor.
+    \item Servidor: Processa as solicita\c{c}\~oes enviadas pelo cliente, realiza opera\c{c}\~oes no banco de dados ou em outros servi\c{c}os, e retorna respostas apropriadas, geralmente no formato HTML, JSON ou XML.
+\end{enumerate}
 
-\section{Instala\c{c}\~ao e Configura\c{c}\~ao}
+\chapter{Django Framework}
+\begin{quote}
+''Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design. Built by experienced developers, it takes care of much of the hassle of web development, so you can focus on writing your app without needing to reinvent the wheel. It’s free and open source.''
+\end{quote}
+
+\section{O que \'{e}}
+
+Django \'{e} um framework de desenvolvimento web em Python que segue o padr\~ao MTV (Model-Template-View). Ele facilita o desenvolvimento de aplica\c{c}\~oes robustas e escal\'aveis com foco em rapidez e seguran\c{c}a.
+
+\textbf{Caracter\'isticas principais:}
 \begin{itemize}
-  \item Instala\c{c}\~ao via pip: \texttt{pip install django}
-  \item Criar \texttt{requirements.txt}: \texttt{pip freeze > requirements.txt}
-  \item Instalar depend\^encias: \texttt{pip install -r requirements.txt}
-  \item Ambiente virtual: \texttt{virtualenv meu\_ambiente}
-  \item Ativar virtualenv:
+    \item Alta produtividade: Oferece atalhos para tarefas comuns, como autentica\c{c}\~ao e manipula\c{c}\~ao de formul\'arios.
+    \item Seguran\c{c}a: Prote\c{c}\~ao contra vulnerabilidades como SQL Injection, CSRF e XSS.
+    \item Escalabilidade: Adequado para aplica\c{c}\~oes de grande porte.
+    \item Comunidade ativa: Extensa documenta\c{c}\~ao e bibliotecas de terceiros.
+\end{itemize}
+
+\textbf{Pr\'e-requisitos:}
+\begin{itemize}
+    \item Conhecimento b\'asico em Python.
+    \item Familiaridade com HTML, CSS e HTTP.
+    \item Um ambiente de desenvolvimento configurado (Python 3.8 ou superior instalado) e o pip.
+\end{itemize}
+
+\section{Prepara\c{c}\~ao de ambiente}
+
+\subsection*{Ambiente virtual (opcional, por\'em altamente recomendado)}
+O virtualenv \'{e} uma ferramenta do Python que permite criar ambientes virtuais isolados para projetos. Um ambiente virtual \'{e} uma c\'opia leve e independente do interpretador Python, onde voc\^{e} pode instalar pacotes espec\'{i}ficos sem interferir no sistema global ou em outros projetos.
+
+\textbf{Principais Benef\'icios:}
+\begin{itemize}
+    \item Isolamento de depend\^{e}ncias: Cada projeto pode ter suas pr\'oprias vers\~oes de pacotes, evitando conflitos.
+    \item Reprodutibilidade: Facilita replicar o ambiente de desenvolvimento em diferentes m\'aquinas.
+    \item Organiza\c{c}\~ao: Mant\'em o ambiente de cada projeto separado, melhorando a manuten\c{c}\~ao.
+\end{itemize}
+
+\begin{enumerate}
+    \item Instalar o Virtualenv caso n\~ao esteja instalado na m\'aquina.
+    \item Criar um ambiente virtual:
+
+\begin{lstlisting}[language=bash]
+virtualenv meu_ambiente
+\end{lstlisting}
+
+    \item Ativar o ambiente virtual:
     \begin{itemize}
-      \item Windows: \texttt{meu\_ambiente\textbackslash Scripts\textbackslash activate}
-      \item Linux/Mac: \texttt{source meu\_ambiente/bin/activate}
+      \item Windows:
+\begin{lstlisting}[language=bash]
+meu_ambiente\Scripts\activate
+\end{lstlisting}
+      \item Linux/Mac:
+\begin{lstlisting}[language=bash]
+source meu_ambiente/bin/activate
+\end{lstlisting}
     \end{itemize}
-\end{itemize}
+\end{enumerate}
 
-\section{Docker (Opcional)}
+Por exemplo, com o virtualenv, voc\^{e} pode ter um projeto usando o Django 4.0 e outro usando o Django 3.2, sem que as vers\~oes interfiram entre si.
+
+\subsection*{Docker (opcional)}
+
+\section{C\'odigo-fonte}
+\href{https://github.com/hrausch/academico-django-web/tree/aula-01/professorhub}{https://github.com/hrausch/academico-django-web/tree/aula-01/professorhub}
+
+\section{Instala\c{c}\~ao}
+
+\begin{lstlisting}[language=bash]
+pip install django
+\end{lstlisting}
+
+\subsection{requirements.txt}
+O arquivo \texttt{requirements.txt} lista todas as depend\^{e}ncias de um projeto Python. Ele \'{e} usado para replicar o ambiente em diferentes m\'aquinas.
+
+\textbf{Benef\'icios}:
 \begin{itemize}
-  \item Crie um Dockerfile e um arquivo \texttt{docker-compose.yml} para gerenciar a aplica\c{c}\~ao Django em containers.
+    \item Facilita a gest\~ao e instala\c{c}\~ao de depend\^{e}ncias.
+    \item Garante reprodutibilidade entre ambientes (desenvolvimento, teste e produ\c{c}\~ao).
 \end{itemize}
 
-\section{Criando Projeto}
-\texttt{django-admin startproject nome\_do\_projeto}
+\begin{itemize}
+  \item Criar \texttt{requirements.txt}:
+\begin{lstlisting}[language=bash]
+pip freeze > requirements.txt
+\end{lstlisting}
 
-\section{Arquivos do Projeto}
+  \item Instalar depend\^{e}ncias:
+\begin{lstlisting}[language=bash]
+pip install -r requirements.txt
+\end{lstlisting}
+\end{itemize}
+
+\section{Iniciando um novo projeto}
+
+Para criar um projeto, basta rodar o comando abaixo. \textbf{Caso voc\^{e} esteja utilizando um virtualenv \'{e} necess\'ario ativ\'a-lo antes.}
+
+\begin{lstlisting}[language=bash]
+django-admin startproject nome_do_projeto
+\end{lstlisting}
+
+Caso esteja usando Docker:
+\begin{lstlisting}[language=bash]
+docker-compose run web django-admin startproject <nome_do_projeto> .
+\end{lstlisting}
+
+\subsection{Arquivos do Projeto}
 \begin{itemize}
   \item \texttt{manage.py}, \texttt{settings.py}, \texttt{urls.py}, \texttt{wsgi.py}, entre outros.
 \end{itemize}
 
+Descri\c{c}\~ao das pastas e arquivos:
+\begin{itemize}
+    \item manage.py: Script para gerenciar comandos administrativos.
+    \item settings.py: Configura\c{c}\~oes do projeto.
+    \item urls.py: Rotas da aplica\c{c}\~ao.
+    \item wsgi.py/asgi.py: Pontos de entrada para servidores web.
+\end{itemize}
 
-\section{Criando M\'odulos (Apps)}
+\subsubsection*{Arquivo Settings.py}
+O \texttt{settings.py} cont\'em as configura\c{c}\~oes principais do Django, como:
+\begin{itemize}
+    \item DEBUG: Define se o ambiente \'{e} de desenvolvimento ou produ\c{c}\~ao.
+    \item ALLOWED\_HOSTS: Lista de dom\'{i}nios permitidos para o projeto.
+    \item INSTALLED\_APPS: Lista de aplicativos instalados no projeto.
+    \item DATABASES: Configura\c{c}\~ao do banco de dados.
+    \item TEMPLATES: Configura\c{c}\~ao dos diret\'orios de templates.
+\end{itemize}
 
-No Django, um m\'odulo (ou app) \'{e} uma parte independente da aplica\c{c}\~ao que possui uma fun\c{c}\~ao espec\'ifica. Por exemplo, um app pode ser um sistema de login, um blog, ou uma agenda. Cada m\'odulo possui seu pr\'oprio conjunto de arquivos para models, views, rotas, templates, entre outros, facilitando a organiza\c{c}\~ao e reutiliza\c{c}\~ao do c\'odigo.
+\begin{lstlisting}[language=Python]
+# Application definition
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
 
-\section{Comando}
-\texttt{python manage.py startapp nome\_do\_app}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+\end{lstlisting}
+
+\subsubsection*{Urls.py}
+O \texttt{urls.py} gerencia as rotas que conectam URLs a visualiza\c{c}\~oes. As rotas s\~ao conectadas por meio de fun\c{c}\~oes de visualiza\c{c}\~ao ou aplicativos adicionais.
+
+\section{Rodando o projeto no servidor}
+
+\begin{enumerate}
+    \item Ative o virtualenv, se somente se estiver utilizando essa ferramenta.
+
+    \item Inicie o servidor:
+\begin{lstlisting}[language=bash]
+python manage.py runserver
+\end{lstlisting}
+
+    \item Caso esteja usando o docker, inicie o servidor com o comando abaixo:
+\begin{lstlisting}[language=bash]
+docker-compose up
+\end{lstlisting}
+
+    \item Acesse o servidor pelo navegador web
+\end{enumerate}
+
+\section{M\'odulos (Apps)}\label{sec:criarapp}
+
+No Django, um m\'odulo (ou app) \'{e} uma parte independente da aplica\c{c}\~ao que possui uma fun\c{c}\~ao espec\'{i}fica. Por exemplo, um app pode ser um sistema de login, um blog, ou uma agenda. Cada m\'odulo possui seu pr\'oprio conjunto de arquivos para models, views, rotas, templates, entre outros, facilitando a organiza\c{c}\~ao e reutiliza\c{c}\~ao do c\'odigo.
+
+\subsection{Comando}
+\begin{lstlisting}[language=bash]
+python manage.py startapp nome_do_app
+\end{lstlisting}
 
 \section{Configura\c{c}\~oes do App}
 \begin{itemize}
@@ -47,8 +190,3 @@ No Django, um m\'odulo (ou app) \'{e} uma parte independente da aplica\c{c}\~ao 
   \item Criar \texttt{urls.py} no app.
   \item Criar views no \texttt{views.py} e rotas associadas.
 \end{itemize}
-
-
-
-
-

@@ -1,4 +1,105 @@
 \chapter{Templates e Heran\c{c}a}
+Neste capítulo será discutido
+
+\section{Código-fonte}
+\href{https://github.com/hrausch/academico-django-web/tree/aula-04}{https://github.com/hrausch/academico-django-web/tree/aula-04}
+
+\section{Requisitos de software a ser implementado}
+Implementar um template com um menu lateral, e no centro o conteúdo a ser exibido, que são:
+\begin{itemize}
+    \item Um calendário com uma visão semanal ou mensal.
+    \item Uma lista de disciplinas cadastradas em formas de card e um botão para cadastrar novas disciplinas.
+    \item Além disso, no card de cada disciplina haverá opção de detalhamento e de exclusão da disciplina.
+\end{itemize}
+Tais interfaces podem ser vizualizadas nas figuras
+
+
+\section{Etapas de desenvolvimento}
+
+\subsection{Criar o módulo}
+Este modulo que está sendo desenvolvido englobará as funcionalidades de planejamento de aulas do professor, e o nome dele será \texttt{planner}. Assim, para criá-lo faremos o comando.
+
+\texttt{python manage.py startapp planner}
+
+Importante ressaltar, conforme visto na seção \ref{sec:criarapp}, ao criar um módulo é necessário atualizar o \texttt{settings.py} adicionando o novo módulo na variável \texttt{INSTALLED\_APPS}. 
+\begin{lstlisting}[language=Python]
+    INSTALLED_APPS = [
+    'planner',
+    'landing_page',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+
+\end{lstlisting}
+
+\subsection{HTML das páginas}
+\begin{enumerate}
+    \item Dentro do diretório do aplicativo cria-se a pasta \texttt{templates/planner}.
+    \item OBS 1: Na aula anterior adicionamos o arquivo html dentro da pasta templates, contudo, para que o Django utilize a sua máquina de forma automática, precisamos criar dentro da pasta templates uma nova pasta com o nome do módulo.
+\item OBS 2: Deve-se alterar, também, o módulo landing\_page.
+\end{enumerate}
+
+\subsubsection{Configurar settings.py}
+Essa configuração permite que o Django encontre os arquivos de templates corretamente, mesmo quando há múltiplos apps com templates semelhantes.
+\begin{lstlisting}[language=Python]
+    TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'planner/templates'],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+\end{lstlisting}
+
+\subsubsection{HTML}
+
+adicionar
+
+\subsection{Criar as views}
+\begin{lstlisting}[language=Python]
+def admin_dashboard(request):
+   return render(request, 'planner/admin_dashboard.html')
+
+def disciplinas(request):
+   return render(request, 'planner/disciplinas.html')
+\end{lstlisting}
+\subsection{Criar as rotas}
+\subsubsection{Rota globla do projeto}
+\begin{lstlisting}[language=Python]
+    urlpatterns = [
+   # path('admin/', admin.site.urls),
+   path("", include("landing_page.urls")),
+   path("", include("planner.urls")),
+]
+
+\end{lstlisting}
+
+\subsubsection{Rota do módulo}
+\begin{lstlisting}[language=Python]
+from django.urls import path
+from . import views
+
+urlpatterns = [
+   path('dashboard/', views.admin_dashboard, name='admin_dashboard'),
+   path('disciplinas/', views.disciplinas, name='disciplinas'),
+]
+
+    
+\end{lstlisting}
+
 \section{Templates}
 \begin{itemize}
   \item Criar estrutura: \texttt{templates/app\_name/}
@@ -8,10 +109,9 @@
 \end{itemize}
 
 \section{Exemplo de Views e Rotas}
-\begin{lstlisting}[language=Python]
-def admin_dashboard(request):
-   return render(request, 'planner/admin_dashboard.html')
 
-def disciplinas(request):
-   return render(request, 'planner/disciplinas.html')
-\end{lstlisting}
+
+\section{Exercício de fixação}
+Crie uma interface para gestão de tarefas. A tela terá um botão de adicionar tarefas que abrirá uma modal com os campos: título, data de entrega, prioridade.
+Logo abaixo terá uma tabela com a lista de tarefas exibindo os dados cadastrados e com um botão de exclusão.
+

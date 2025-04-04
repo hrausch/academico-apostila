@@ -1,0 +1,82 @@
+\documentclass[12pt]{book}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{longtable}
+\usepackage{inconsolata} % fonte monoespaçada bonita
+
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{orange},
+  showstringspaces=false,
+  columns=flexible,
+  frame=single,
+  backgroundcolor=\color{gray!5}
+}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, class, const, continue, debugger, default, delete, do, else, export, extends,
+            finally, for, function, if, import, in, instanceof, let, new, return, super, switch, this, throw, try,
+            typeof, var, void, while, with, yield},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={true, false, null, undefined},
+  ndkeywordstyle=\color{red}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=true,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{gray}\ttfamily,
+  stringstyle=\color{orange},
+  morestring=[b]',
+  morestring=[b]",
+}
+
+% Estilo global para todos os códigos
+\lstset{
+  language=JavaScript,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{orange},
+  showstringspaces=false,
+  breaklines=true,
+  numbers=none,
+  backgroundcolor=\color{white}, % <-- fundo branco
+  frame=single,
+  tabsize=2,
+  captionpos=b
+}
+
+\title{Desenvolvimento de aplicativos com React Native}
+\author{Herbert Rausch}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\input{REACT_NATIVE/react}
+\input{REACT_NATIVE/react-componentes}
+\include{REACT_NATIVE/apendice_comandos}
+
+\bibliographystyle{plain} % ou abnt, ieee, apalike, etc.
+\bibliography{referencias}
+
+
+
+\end{document}

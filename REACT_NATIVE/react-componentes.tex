@@ -1,0 +1,417 @@
+\chapter{Componentes em React}
+
+\section{O que são componentes?}
+
+\section{O que são componentes em React?}
+
+Os componentes são a base da construção de interfaces no React. Eles permitem que uma aplicação seja dividida em pequenas partes isoladas, reutilizáveis e independentes, facilitando tanto o desenvolvimento quanto a manutenção do código.
+
+Conceitualmente, um componente React é uma função (ou uma classe) JavaScript que recebe entradas chamadas \textit{props} e retorna elementos React — estruturas escritas em JSX que definem o que será exibido na tela.
+
+Ao adotar a abordagem baseada em componentes, o React possibilita que cada parte da interface de usuário seja tratada de forma individual, com responsabilidades bem definidas. Essa divisão modular torna o desenvolvimento mais organizado, promove o reuso de código e facilita o trabalho em equipe.
+
+Segundo a documentação oficial \cite{reactDocsComponents}, os componentes permitem "dividir a interface de usuário em partes independentes, reutilizáveis e pensar em cada parte isoladamente".
+
+Essa filosofia se aplica tanto ao React para web quanto ao React Native, permitindo o uso de uma mesma lógica de construção de interfaces em múltiplas plataformas.
+
+
+\section{Componentes funcionais}
+
+Atualmente, os \textbf{componentes funcionais} são a forma mais recomendada de criar componentes em React. Eles são criados com funções JavaScript padrão e retornam JSX (uma extensão de sintaxe que parece HTML). Veja um exemplo simples:
+
+\begin{lstlisting}[language=JavaScript, caption={Componente funcional PrimeiroComponente.js}]
+import React from 'react';
+import { Text, View } from 'react-native';
+
+export default function PrimeiroComponente() {
+  return (
+    <View>
+      <Text>Olá</Text>
+      <Text>Mundo!</Text>
+    </View>
+  );
+}
+\end{lstlisting}
+
+No exemplo acima, criamos um componente chamado \texttt{PrimeiroComponente} que retorna uma \texttt{<View>} contendo dois textos. No React Native, o \texttt{<View>} funciona como uma \texttt{<div>} no HTML, e o \texttt{<Text>} é equivalente a um \texttt{<p>} ou qualquer elemento de texto.
+
+\subsection*{Atenção ao retorno dos componentes}
+
+No React, um componente deve retornar apenas um elemento JSX. Portanto, se quisermos retornar dois ou mais elementos “irmãos”, devemos agrupá-los dentro de uma tag como \texttt{<View>} ou utilizar um fragmento \texttt{<></>}. Caso contrário, o React emitirá o erro:
+
+\textit{Adjacent JSX elements must be wrapped in an enclosing tag.}
+
+\section{Organizando os componentes}
+
+Seguindo boas práticas do mercado, é comum criar uma pasta chamada \texttt{components} na raiz do projeto. Dentro dessa pasta, todos os componentes são criados e, conforme o projeto cresce, ela pode ser subdividida em categorias.
+
+\textbf{Exemplo de estrutura de projeto:}
+
+\begin{lstlisting}[language=bash]
+meu-app/
+├── App.js
+├── components/
+│   └── PrimeiroComponente.js
+\end{lstlisting}
+
+\section{Importando e utilizando componentes}
+
+Uma vez criado o componente, podemos importá-lo e utilizá-lo em outros arquivos, como no \texttt{App.js}:
+
+\begin{lstlisting}[language=JavaScript, caption={Importando e utilizando um componente personalizado}]
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import PrimeiroComponente from './components/PrimeiroComponente';
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Bem-vindo ao React Native!</Text>
+      <PrimeiroComponente />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+\end{lstlisting}
+
+O arquivo \texttt{PrimeiroComponente.js} conterá o seguinte:
+
+\begin{lstlisting}[language=JavaScript, caption={Conteúdo de PrimeiroComponente.js}]
+import React from 'react';
+import { Text, View } from 'react-native';
+
+export default function PrimeiroComponente() {
+  return (
+    <View>
+      <Text>Olá</Text>
+      <Text>Mundo!</Text>
+    </View>
+  );
+}
+\end{lstlisting}
+
+\subsection*{Renomeando o componente na importação}
+
+O nome da tag JSX usada para renderizar o componente é definido de acordo com o nome da variável usada na importação, e não necessariamente pelo nome da função exportada. Veja o exemplo abaixo:
+
+\begin{lstlisting}[language=JavaScript, caption={Importando com outro nome}]
+import TioPatinhas from './components/PrimeiroComponente';
+
+export default function App() {
+  return (
+    <View>
+      <TioPatinhas />
+    </View>
+  );
+}
+\end{lstlisting}
+
+Neste caso, mesmo que o nome da função exportada dentro do arquivo seja \texttt{PrimeiroComponente}, o componente será renderizado como \texttt{<TioPatinhas />} pois é o nome dado na importação.
+
+\section{Propriedades \texttt{props}}
+
+As propriedades, conhecidas como \texttt{props}, são um mecanismo essencial no React para a comunicação entre componentes. Elas permitem passar informações de um componente pai para um componente filho, tornando os componentes mais flexíveis, reutilizáveis e dinâmicos \cite{rocketseatComponents}.
+
+Conceitualmente, \texttt{props} são objetos que carregam pares de chave e valor — os atributos declarados na chamada do componente.
+
+\subsection*{Exemplo básico}
+
+Abaixo vemos um componente que recebe uma \texttt{prop} chamada \texttt{nome} e a exibe na tela:
+
+\begin{lstlisting}[language=JavaScript, caption={Componente recebendo props}]
+export const Saudacao = (props) => {
+    return (
+      <Text>Olá, {props.nome}!</Text>
+    );
+  };
+
+export function SaudacaoCompleta(props) {
+    return (
+      <Text>
+        Olá, {props.nome}! Você tem {props.idade} anos.
+      </Text>
+    );
+  }
+\end{lstlisting}
+
+E sua utilização dentro de outro componente:
+
+\begin{lstlisting}[language=JavaScript]
+import { Saudacao, SaudacaoCompleta} from './components/PrimeiroComponente';
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Olá, Mundo!</Text>
+      <Saudacao nome="João" />
+      <SaudacaoCompleta nome="Maria" idade={30} />
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+\end{lstlisting}
+
+Nesse exemplo, o valor "Leitor" é passado como atributo do componente e acessado internamente via \texttt{props.nome}.
+
+\subsection*{Importando componentes com e sem chaves}
+
+Aqui está um ponto importante: a forma como o componente é exportado afeta diretamente como ele será importado em outro arquivo.
+
+\begin{itemize}
+  \item Para o \texttt{export default}, usamos \textbf{sem chaves}:
+  \begin{lstlisting}[language=JavaScript]
+import PrimeiroComponente from './components/PrimeiroComponente';
+  \end{lstlisting}
+
+  \item Para \texttt{export} nomeado, usamos \textbf{com chaves}:
+  \begin{lstlisting}[language=JavaScript]
+import {PrimeiroComponente, Saudacao, SaudacaoCompleta} from './components/PrimeiroComponente';
+  \end{lstlisting}
+\end{itemize}
+
+Se você tentar importar um componente nomeado sem usar chaves, receberá um erro dizendo que o módulo não contém a exportação padrão.
+
+\subsection*{Por que usamos \texttt{\{ \}} para passar números em props?}
+
+Em React (JSX), quando passamos um valor para uma propriedade (prop), precisamos usar chaves \texttt{\{\}} sempre que o valor for uma expressão JavaScript — como um número, booleano, variável ou função.
+
+Por exemplo, veja a diferença entre:
+
+\begin{lstlisting}[language=JavaScript]
+<SaudacaoCompleta nome="Maria" idade={30} /> // correto: número
+<SaudacaoCompleta nome="Maria" idade="30" /> // também funciona, mas é string
+\end{lstlisting}
+
+No primeiro caso, \texttt{30} é um número. No segundo, \texttt{"30"} é uma string. Se quisermos realizar cálculos com esse valor dentro do componente, é importante que ele seja passado como número (usando \texttt{\{30\}}).
+
+\subsubsection*{Resumo de como passar diferentes tipos de dados em props}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Tipo de valor} & \textbf{Como passar no JSX} & \textbf{Exemplo} \\
+\hline
+Texto (string)   & Entre aspas duplas              & \texttt{nome="Maria"} \\
+Número           & Entre chaves                    & \texttt{idade=\{30\}} \\
+Booleano         & Entre chaves                    & \texttt{ativo=\{true\}} \\
+Variável         & Entre chaves                    & \texttt{idade=\{minhaIdade\}} \\
+Expressão        & Entre chaves                    & \texttt{total=\{qtd * preco\}} \\
+Função           & Entre chaves                    & \texttt{onClick=\{handleClick\}} \\
+Objeto ou Array  & Entre chaves com estrutura      & \texttt{dados=\{\{nome: "Maria"\}\}} \\
+\hline
+\end{tabular}
+\end{center}
+
+Sempre que o valor passado for algo que o JavaScript possa avaliar (em vez de texto literal), use as chaves \texttt{\{\}}. Isso garante que o componente receba o dado corretamente tipado e funcional.
+
+
+
+\subsection*{Props como children}
+
+Todo componente React também possui uma propriedade especial chamada \texttt{children}, que representa tudo o que estiver entre a abertura e o fechamento da tag do componente.
+
+\begin{lstlisting}[language=JavaScript, caption={Uso de props.children}]
+const Card = (props) => {
+  return (
+    <View>
+      {props.children}
+    </View>
+  );
+};
+
+const App = () => {
+  return (
+    <Card>
+      <Text>Conteúdo dentro do Card!</Text>
+    </Card>
+  );
+};
+\end{lstlisting}
+
+Isso permite criar estruturas reutilizáveis e aninhadas com flexibilidade.
+
+\subsection*{Convenções e boas práticas}
+
+\begin{itemize}
+  \item Nomes de componentes devem começar com letra maiúscula.
+  \item Props podem ter qualquer nome — você define.
+  \item As tags podem ser escritas como \texttt{<Componente />} ou \texttt{<Componente></Componente>}.
+\end{itemize}
+
+Para mais informações, consulte a documentação oficial sobre \textit{props} em: \url{https://pt-br.legacy.reactjs.org/docs/components-and-props.html}
+
+\section{Composição de Componentes}
+
+Uma das grandes forças do React está na sua capacidade de composição. Isso significa que um componente pode conter outros componentes dentro de si, como se fosse montar uma interface com peças de LEGO.
+
+Esse conceito nos permite dividir aplicações complexas em partes menores, facilitando a manutenção e a reutilização do código \cite{devtoComponentes, reactDocsComponents}.
+
+\subsection*{Exemplo de composição}
+
+Imagine uma tela inicial composta por cabeçalho, menu, carrossel, conteúdo e rodapé. Podemos criar um componente \texttt{Home} que agrupa todos esses elementos:
+
+\begin{lstlisting}[language=JavaScript, caption={Composição de componentes}]
+const Home = () => {
+  return (
+    <>
+      <Header />
+      <NavBar />
+      <Carrousel />
+      <Conteudo />
+      <Footer />
+    </>
+  );
+};
+
+export default Home;
+\end{lstlisting}
+
+Cada componente acima pode ser desenvolvido de forma independente, testado isoladamente e reutilizado em outras partes do projeto.
+
+
+\section{Múltiplos componentes por arquivo}
+
+No React, é perfeitamente possível criar mais de um componente dentro de um mesmo arquivo \texttt{.js}. Essa prática é recomendada quando:
+
+\begin{itemize}
+  \item Os componentes são pequenos e utilizados apenas dentro daquele contexto.
+  \item Há uma forte relação entre eles (por exemplo, \texttt{Card}, \texttt{CardHeader}, \texttt{CardBody}).
+  \item Você quer reduzir a fragmentação do projeto em arquivos muito pequenos.
+\end{itemize}
+
+Para componentes maiores ou reutilizáveis entre várias telas, o ideal é separá-los em arquivos próprios, respeitando o princípio da responsabilidade única.
+
+
+Por exemplo, podemos ter um arquivo chamado \texttt{Layout.js} que contém os componentes \texttt{Header}, \texttt{Footer} e um componente principal \texttt{Main}:
+
+\begin{lstlisting}[language=JavaScript, caption={Vários componentes no mesmo arquivo}]
+import React from 'react';
+import { View, Text } from 'react-native';
+
+export const Header = () => (
+  <View><Text>Header</Text></View>
+);
+
+export const Footer = () => (
+  <View><Text>Footer</Text></View>
+);
+
+const Main = () => (
+  <View>
+    <Header />
+    <Text>Conteúdo Principal</Text>
+    <Footer />
+  </View>
+);
+
+export default Main;
+\end{lstlisting}
+
+Neste exemplo, temos:
+
+\begin{itemize}
+  \item Um \textbf{componente principal} chamado \texttt{Main}, que está sendo exportado como \texttt{default}.
+  \item Dois \textbf{componentes auxiliares} \texttt{Header} e \texttt{Footer}, \textit{named exported}.
+\end{itemize}
+
+\subsection*{Importando componentes com e sem chaves (again)}
+
+Aqui está um ponto importante: a forma como o componente é exportado afeta diretamente como ele será importado em outro arquivo.
+
+\begin{itemize}
+  \item Para o \texttt{export default}, usamos \textbf{sem chaves}:
+  \begin{lstlisting}[language=JavaScript]
+import Main from './Layout';
+  \end{lstlisting}
+
+  \item Para \texttt{named export}, usamos \textbf{com chaves}:
+  \begin{lstlisting}[language=JavaScript]
+import { Header, Footer } from './Layout';
+  \end{lstlisting}
+\end{itemize}
+
+Se você tentar importar um componente nomeado sem usar chaves, receberá um erro dizendo que o módulo não contém a exportação padrão\cite{rocketseatExports}.
+
+
+\section{Documentação oficial de componentes}
+
+Todos os componentes padrão do React DOM estão documentados em:
+
+\begin{quote}
+\url{https://react.dev/reference/react-dom/components}
+\end{quote}
+
+Para o React Native, a lista de componentes e suas propriedades pode ser consultada em:
+
+\begin{quote}
+\url{https://reactnative.dev/docs/components-and-apis}
+\end{quote}
+
+
+\section*{Código-fonte}
+Código-fonte deste capítulo encontra-se em \href{https://github.com/hrausch/academico-react-native/tree/aula-05}{https://github.com/hrausch/academico-react-native/tree/aula-05} .
+
+\section*{Atividade Prática – Criando uma Mini Página com React Native}
+
+\subsection*{Objetivo}
+Aplicar os conceitos de componentes funcionais, props, composição e diferentes formas de exportação (\texttt{default} e \texttt{named}) aprendidos nas aulas anteriores.
+
+\subsection*{Descrição da atividade}
+
+Crie um aplicativo React Native utilizando Expo que represente uma pequena página de perfil. O aplicativo deverá ser estruturado com os seguintes componentes:
+
+\begin{enumerate}
+  \item \textbf{Header} (componente nomeado): Exibe o título “Bem-vindo ao App de Perfil”.
+  
+  \item \textbf{UserInfo} (componente nomeado): Recebe e exibe as seguintes \texttt{props}:
+  \begin{itemize}
+    \item \texttt{nome}
+    \item \texttt{idade}
+    \item \texttt{email}
+  \end{itemize}
+  
+  \item \textbf{MensagemPersonalizada} (componente nomeado): Recebe como prop o nome do usuário e exibe a seguinte mensagem: \texttt{Olá, [nome]! Que bom ver você por aqui.}
+  
+  \item \textbf{Footer} (componente nomeado): Exibe o rodapé com o ano atual.
+  
+  \item \textbf{App} (componente com \texttt{export default}): Componente principal que importa e renderiza os demais componentes.
+\end{enumerate}
+
+
+
+\vspace{0.5cm}
+\noindent
+\textbf{Exemplo de estrutura esperada no retorno do componente App:}
+
+\begin{lstlisting}[language=JavaScript]
+<Header />
+<UserInfo nome="Ana" idade={25} email="ana@email.com" />
+<MensagemPersonalizada nome="Ana" />
+<Footer />
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+\subsection*{Critérios de avaliação}
+
+\begin{itemize}
+  \item Uso correto de componentes funcionais
+  \item Utilização adequada de \texttt{props}
+  \item Composição e reutilização de componentes
+  \item Uso de \texttt{export default} e \texttt{named exports}
+  \item Organização e clareza do código
+\end{itemize}
+
+
+
+
+
+%https://blog.geekhunter.com.br/criando-componentes-react-componentes-de-classe-e-funcional-sem-estado/

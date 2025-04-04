@@ -1,0 +1,30 @@
+\appendix
+\chapter{Sequência de Comandos para Criar e Executar Aplicações React com Expo}
+
+A tabela a seguir apresenta a sequência de comandos necessária para instalar, criar e executar um aplicativo React utilizando Expo, tanto no ambiente local quanto de forma dockerizada.
+
+\begin{longtable}{|p{5cm}|p{9cm}|}
+\hline
+\textbf{Etapa} & \textbf{Comando} \\
+\hline
+\multicolumn{2}{|c|}{\textbf{Instalação e uso sem Docker}} \\
+\hline
+Instalar Expo CLI & 
+\texttt{npm install -g expo-cli} \\
+\hline
+Criar novo aplicativo & 
+\texttt{expo init nome-do-app} \newline
+Selecionar o template \texttt{blank} \\
+\hline
+Entrar na pasta do projeto & 
+\texttt{cd nome-do-app} \\
+\hline
+Instalar suporte Web (obrigatório) & 
+\texttt{npx expo install react-dom react-native-web @expo/metro-runtime} \\
+\hline
+Rodar a aplicação & 
+\texttt{npm start}  \\
+\hline
+\hline
+\end{longtable}
+
